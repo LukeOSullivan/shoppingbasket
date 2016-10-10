@@ -1,0 +1,8 @@
+Basket Receipt
+Date/Time: 07/10/2016 16:02:21
+
+Description                     Qty       Price      Total Price
+- Test                          1         £1.00      £1.00
+
+Total Items: 1
+Order Total: £1.00
