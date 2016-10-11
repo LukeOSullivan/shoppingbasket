@@ -216,5 +216,4 @@ public class ShoppingBasket {
 	public String getBasketTotal(){
 		return String.format("£%.2f", basketTotal);
 	}
-
 }
