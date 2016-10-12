@@ -21,6 +21,9 @@ import javax.swing.SwingConstants;
 /**
  * Shopping basket GUI.
  * Can add, remove, and edit products, calculate totals, and save receipt as a file.
+ * example changes
+ * more changes
+ * further changes
  * 
  * @author Luke O'Sullivan
  */
@@ -116,7 +119,8 @@ public class ShoppingBasketGUI {
 				try {
 					String priceAsString = price.getText();
 					latestPrice = Float.parseFloat(priceAsString);
-					shoppingBasket.AddProduct(name.getText(), latestPrice,(Integer)quantitySpinner.getValue());
+					shoppingBasket.AddProduct(name.getText(), latestPrice,
+							(Integer)quantitySpinner.getValue());
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(frame, e1.getMessage());
 				}
