@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
  * Shopping basket GUI.
  * Can add, remove, and edit products, calculate totals, and save receipt as a file.
  * example changes
+ * more changes
  * 
  * @author Luke O'Sullivan
  */
