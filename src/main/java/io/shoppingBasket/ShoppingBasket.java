@@ -80,7 +80,7 @@ public class ShoppingBasket {
 			for(int i = 0; i < model.size();i++){
 				if(model.getElementAt(i).ProductName.equals(name)){
 					model.getElementAt(i).RemoveItems(quantity);
-					if(model.getElementAt(i).Quantity <= 0){
+					if(model.getElementAt(i).Quantity < 1){
 						model.removeElementAt(i);
 					}
 				}
@@ -141,6 +141,7 @@ public class ShoppingBasket {
 		}
 		else{
 			throw new IllegalArgumentException("Product " + name + " not in basket");
+			
 		}
 		return currentPrice;
 		

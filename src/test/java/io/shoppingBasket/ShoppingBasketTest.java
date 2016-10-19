@@ -13,29 +13,9 @@ import java.util.Date;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ShoppingBasketTest {
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	/*
 	 * Constructor creates an object
@@ -242,12 +222,9 @@ public class ShoppingBasketTest {
 			list.addElement(new OrderItem(name[i], value[i], quantity[i]));
 			basket.numItems += quantity[i];
 		}
-		//check numItems is 4
-		assertEquals(4, basket.numItems);
+
 		//Remove by false product name
 		basket.RemoveProduct("Unknown", 1);
-		//check numItems remains 4
-		assertEquals(4, basket.numItems);
 	}
 
 	/*
@@ -309,7 +286,7 @@ public class ShoppingBasketTest {
 	 * Calculate the current price of a product
 	 */
 	@Test
-	public void testCurrentPrice() {
+	public void testCurrentPriceString() {
 		String[] name = { "Test1", "Test2" };
 		float[] value = { 1.00F, 2.00F };
 		int[] quantity = { 1, 3 };
@@ -327,7 +304,7 @@ public class ShoppingBasketTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testCurrentPriceWithException() {
+	public void testCurrentPriceStringWithException() {
 		String[] name = { "Test1", "Test2" };
 		float[] value = { 1.00F, 2.00F };
 		int[] quantity = { 1, 3 };
@@ -337,10 +314,8 @@ public class ShoppingBasketTest {
 		for (int i = 0; i < name.length; i++) {
 			list.addElement(new OrderItem(name[i], value[i], quantity[i]));
 		}
-		assertEquals(2, list.getSize());
-		
-		// check for current price by false product name
-		assertEquals(1.00F, basket.CurrentPrice("Unknown"), 0);
+		//get current price from invalid product
+		basket.CurrentPrice("missing");
 	}
 
 	/*
@@ -374,6 +349,7 @@ public class ShoppingBasketTest {
 		ShoppingBasket basket = new ShoppingBasket();
 
 		assertTrue(basket.SaveBasket(filename));
+		assertFalse(basket.SaveBasket(".."));
 		File file = new File(filename);
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
 		Date date = new Date();

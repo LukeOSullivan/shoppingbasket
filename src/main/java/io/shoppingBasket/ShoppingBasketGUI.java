@@ -19,15 +19,15 @@ import javax.swing.JList;
 import javax.swing.SwingConstants;
 
 /**
- * Shopping basket GUI.
- * Can add, remove, and edit products, calculate totals, and save receipt as a file.
+ * Shopping basket GUI. Can add, remove, and edit products, calculate totals,
+ * and save receipt as a file.
  * 
  * @author Luke O'Sullivan
  */
 
 public class ShoppingBasketGUI {
 
-	private JFrame frame;
+	private JFrame frmShoppingBasketV;
 	private JTextField name;
 	private JSpinner quantitySpinner;
 	private JTextField price;
@@ -41,7 +41,7 @@ public class ShoppingBasketGUI {
 	private JList<OrderItem> basket;
 	private ShoppingBasket shoppingBasket;
 	private JTextField totalPrice;
-	private JTextField totalItems;	
+	private JTextField totalItems;
 
 	/**
 	 * Launch the application.
@@ -51,7 +51,7 @@ public class ShoppingBasketGUI {
 			public void run() {
 				try {
 					ShoppingBasketGUI window = new ShoppingBasketGUI();
-					window.frame.setVisible(true);
+					window.frmShoppingBasketV.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -70,10 +70,12 @@ public class ShoppingBasketGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 589, 470);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmShoppingBasketV = new JFrame();
+		frmShoppingBasketV.setTitle("Shopping Basket v1.0");
+		frmShoppingBasketV.setResizable(false);
+		frmShoppingBasketV.setBounds(100, 100, 589, 470);
+		frmShoppingBasketV.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmShoppingBasketV.getContentPane().setLayout(null);
 		
 		/**
 		 * Create new shopping basket object
@@ -87,7 +89,7 @@ public class ShoppingBasketGUI {
 		 */
 		name = new JTextField();
 		name.setBounds(16, 35, 183, 26);
-		frame.getContentPane().add(name);
+		frmShoppingBasketV.getContentPane().add(name);
 		name.setColumns(10);
 
 		/**
@@ -96,7 +98,7 @@ public class ShoppingBasketGUI {
 		price = new JTextField();
 		price.setHorizontalAlignment(SwingConstants.TRAILING);
 		price.setBounds(329, 35, 117, 26);
-		frame.getContentPane().add(price);
+		frmShoppingBasketV.getContentPane().add(price);
 		price.setColumns(10);
 
 		/**
@@ -104,7 +106,7 @@ public class ShoppingBasketGUI {
 		 */
 		quantitySpinner = new JSpinner();
 		quantitySpinner.setBounds(211, 35, 106, 26);
-		frame.getContentPane().add(quantitySpinner);
+		frmShoppingBasketV.getContentPane().add(quantitySpinner);
 
 		/**
 		 *  Addition of item
@@ -119,15 +121,15 @@ public class ShoppingBasketGUI {
 					shoppingBasket.AddProduct(name.getText(), latestPrice,
 							(Integer)quantitySpinner.getValue());
 				} catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(frame, e1.getMessage());
+					JOptionPane.showMessageDialog(frmShoppingBasketV, e1.getMessage());
 				}
 				totalPrice.setText(shoppingBasket.getBasketTotal());
 				totalItems.setText(shoppingBasket.getNumItems());
-				frame.repaint();
+				frmShoppingBasketV.repaint();
 			}
 		});
 		addButton.setBounds(458, 35, 117, 29);
-		frame.getContentPane().add(addButton);
+		frmShoppingBasketV.getContentPane().add(addButton);
 
 		/**
 		 *  Removal of items
@@ -136,26 +138,33 @@ public class ShoppingBasketGUI {
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/**
-				 * Remove item by specified quantity
+				 * Check there are items to remove
 				 */
-				if(basket.isSelectionEmpty()){
-					shoppingBasket.RemoveProduct(name.getText(), (Integer)quantitySpinner.getValue());
-				}
-				/**
-				 * Remove item by selection
-				 */
-				else{
-					while(!basket.isSelectionEmpty()){
-					shoppingBasket.RemoveProduct(basket.getSelectedValue().ProductName);
+				try{
+					/**
+					 * Remove item by specified quantity
+				 	*/
+					if(basket.isSelectionEmpty()){
+						shoppingBasket.RemoveProduct(name.getText(), (Integer)quantitySpinner.getValue());
 					}
+					/**
+					 * Remove item by selection
+					 */
+					else{
+						while(!basket.isSelectionEmpty()){
+							shoppingBasket.RemoveProduct(basket.getSelectedValue().ProductName);
+						}
+					}
+					totalPrice.setText(shoppingBasket.getBasketTotal());
+					totalItems.setText(shoppingBasket.getNumItems());
+					frmShoppingBasketV.repaint();
+				}catch (Exception e1) {
+					JOptionPane.showMessageDialog(frmShoppingBasketV, e1.getMessage());	
 				}
-				totalPrice.setText(shoppingBasket.getBasketTotal());
-				totalItems.setText(shoppingBasket.getNumItems());
-				frame.repaint();
 			}
-		});
+			});
 		removeButton.setBounds(458, 93, 117, 29);
-		frame.getContentPane().add(removeButton);
+		frmShoppingBasketV.getContentPane().add(removeButton);
 
 		/**
 		 *  Editing of item
@@ -188,16 +197,16 @@ public class ShoppingBasketGUI {
 					}
 				}
 				else{
-					JOptionPane.showMessageDialog(frame, "No product selected");
+					JOptionPane.showMessageDialog(frmShoppingBasketV, "No product selected");
 				}
 				totalPrice.setText(shoppingBasket.getBasketTotal());
 				totalItems.setText(shoppingBasket.getNumItems());
-				frame.repaint();
+				frmShoppingBasketV.repaint();
 				
 			}
 		});
 		editButton.setBounds(458, 134, 117, 29);
-		frame.getContentPane().add(editButton);
+		frmShoppingBasketV.getContentPane().add(editButton);
 
 		/**
 		 *  Clear all items
@@ -208,11 +217,11 @@ public class ShoppingBasketGUI {
 				shoppingBasket.ClearBasket();
 				totalPrice.setText(shoppingBasket.getBasketTotal());
 				totalItems.setText(shoppingBasket.getNumItems());
-				frame.repaint();
+				frmShoppingBasketV.repaint();
 			}
 		});
 		clearBasketButton.setBounds(458, 175, 117, 29);
-		frame.getContentPane().add(clearBasketButton);
+		frmShoppingBasketV.getContentPane().add(clearBasketButton);
 
 		/**
 		 * Save to file
@@ -220,23 +229,23 @@ public class ShoppingBasketGUI {
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FileDialog fileSelect = new FileDialog(frame, "Please select a file", FileDialog.SAVE);
+				FileDialog fileSelect = new FileDialog(frmShoppingBasketV, "Save As Receipt", FileDialog.SAVE);
 				fileSelect.setVisible(true);
 				
 				String fileName = fileSelect.getFile();
 				
 				if (shoppingBasket.SaveBasket(fileName)){
-					JOptionPane.showMessageDialog(frame, "Save successful");
+					JOptionPane.showMessageDialog(frmShoppingBasketV, "Save successful");
 				}
 				else{
-					JOptionPane.showMessageDialog(frame, "File not saved", "Invalid filename", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frmShoppingBasketV, "File not saved", "Invalid filename", JOptionPane.ERROR_MESSAGE);
 				}
 				
 				
 			}
 		});
 		saveButton.setBounds(458, 216, 117, 29);
-		frame.getContentPane().add(saveButton);
+		frmShoppingBasketV.getContentPane().add(saveButton);
 
 		/**
 		 *  Exit program
@@ -248,54 +257,56 @@ public class ShoppingBasketGUI {
 			}
 		});
 		exitButton.setBounds(466, 413, 117, 29);
-		frame.getContentPane().add(exitButton);
+		frmShoppingBasketV.getContentPane().add(exitButton);
 
 		JLabel lblNoItems = new JLabel("No Items");
 		lblNoItems.setBounds(16, 418, 61, 16);
-		frame.getContentPane().add(lblNoItems);
+		frmShoppingBasketV.getContentPane().add(lblNoItems);
 
 		JLabel lblTotal = new JLabel("Total");
 		lblTotal.setBounds(257, 419, 47, 16);
-		frame.getContentPane().add(lblTotal);
+		frmShoppingBasketV.getContentPane().add(lblTotal);
 
 		/**
 		 *  Total price of items in basket
 		 */
 		totalPrice = new JTextField();
+		totalPrice.setEditable(false);
 		totalPrice.setHorizontalAlignment(SwingConstants.RIGHT);
 		totalPrice.setText(shoppingBasket.getBasketTotal());
 		totalPrice.setBounds(300, 413, 130, 26);
-		frame.getContentPane().add(totalPrice);
+		frmShoppingBasketV.getContentPane().add(totalPrice);
 		totalPrice.setColumns(10);
 
 		JLabel lblProductName = new JLabel("Product Name");
 		lblProductName.setBounds(16, 18, 97, 16);
-		frame.getContentPane().add(lblProductName);
+		frmShoppingBasketV.getContentPane().add(lblProductName);
 
 		JLabel lblQuantity = new JLabel("Quantity");
 		lblQuantity.setBounds(211, 18, 61, 16);
-		frame.getContentPane().add(lblQuantity);
+		frmShoppingBasketV.getContentPane().add(lblQuantity);
 
 		JLabel lblLatestPrice = new JLabel("Latest Price");
 		lblLatestPrice.setBounds(329, 18, 101, 16);
-		frame.getContentPane().add(lblLatestPrice);
+		frmShoppingBasketV.getContentPane().add(lblLatestPrice);
 
 		JLabel lblBasket = new JLabel("Basket");
 		lblBasket.setBounds(16, 73, 61, 16);
-		frame.getContentPane().add(lblBasket);
+		frmShoppingBasketV.getContentPane().add(lblBasket);
 
 		/**
 		 *  Total number of items in basket
 		 */
 		totalItems = new JTextField();
+		totalItems.setEditable(false);
 		totalItems.setHorizontalAlignment(SwingConstants.TRAILING);
 		totalItems.setText(shoppingBasket.getNumItems());
 		totalItems.setBounds(85, 413, 130, 26);
-		frame.getContentPane().add(totalItems);
+		frmShoppingBasketV.getContentPane().add(totalItems);
 		totalItems.setColumns(10);
 		
 		basket.setBounds(16, 98, 430, 292);
-		frame.getContentPane().add(basket);
+		frmShoppingBasketV.getContentPane().add(basket);
 		
 		/**
 		 * Displays window with help text
@@ -311,11 +322,12 @@ public class ShoppingBasketGUI {
 						+ "Editing Items:\nSelect an item to edit, then click 'Edit'. Change the values of Quantity and/or Price, then click 'OK' to confirm.\n\n"
 						+ "Saving Receipts:\nClick 'Save', then select a new or existing filename to save to.\n\n"
 						+ "Remove All Items: Click 'Clear Basket'.\n\n"
-						+ "Click 'Exit' to close the program. The current basket will be discarded upon close.", "Help", JOptionPane.INFORMATION_MESSAGE);
+						+ "Click 'Exit' to close the program. The current basket will be discarded upon close.", "Help", 
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		helpButton.setBounds(466, 372, 117, 29);
-		frame.getContentPane().add(helpButton);
+		frmShoppingBasketV.getContentPane().add(helpButton);
 
 	}
 }
