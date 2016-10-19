@@ -1,5 +1,5 @@
 Basket Receipt
-Date/Time: 10/10/2016 17:00:45
+Date/Time: 18/10/2016 16:12:18
 
 Description                     Qty       Price      Total Price
 - Test                          1         £1.00      £1.00
